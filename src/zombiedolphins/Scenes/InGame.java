@@ -8,10 +8,14 @@ package zombiedolphins.Scenes;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import zombiedolphins.GraphicsView;
 
 /**
@@ -23,7 +27,8 @@ public class InGame extends BorderPane implements Controllable{
     
     public InGame(GraphicsView gv){
         this.graphicsView = gv;
-        super.setStyle("-fx-background-color: blue;");
+        
+        super.setStyle("-fx-background-color: yellow;");
         
         Button btnReturn = new Button("Return");
         btnReturn.setMinWidth(100);
@@ -35,10 +40,14 @@ public class InGame extends BorderPane implements Controllable{
                 }
         });
         
-        FlowPane flowPane = new FlowPane();
-        super.setBottom(flowPane);
+        HBox hBox = new HBox();
+        super.setBottom(hBox);
         
-        flowPane.getChildren().add(btnReturn);
+        hBox.getChildren().add(btnReturn);
+        
+        hBox.setStyle("-fx-background-color: blue;");
+        hBox.setMinHeight(100);
+        hBox.setAlignment(Pos.CENTER);
         
     }
 

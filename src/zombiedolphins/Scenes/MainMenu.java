@@ -35,6 +35,8 @@ public class MainMenu extends VBox implements Controllable{
         btnPlay.setMinWidth(200);
         btnPlay.setMinHeight(50);
         
+        super.setFocusTraversable(false);
+        
         btnPlay.setOnAction(new EventHandler<ActionEvent>() {
                     @Override public void handle(ActionEvent e) {
                         graphicsView.showLobby();

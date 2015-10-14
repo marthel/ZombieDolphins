@@ -47,7 +47,7 @@ public class GraphicsView extends Application {
     
     public void showLobby(){
         root.getChildren().add(inGame);
-        System.out.println("Hellooo");
+        inGame.requestFocus();
     }
     
     @Override
