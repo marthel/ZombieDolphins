@@ -19,7 +19,7 @@ import javafx.stage.Stage;
  */
 public class ZombieDolphins{
     public static void main(String[] args) {
-        ViewTest hej = new ViewTest();
+        GraphicsView hej = new GraphicsView();
         hej.launch(args);
     }
     
