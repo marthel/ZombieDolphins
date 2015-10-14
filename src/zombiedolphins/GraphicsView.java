@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -48,9 +49,10 @@ public class GraphicsView extends Application {
             }
         });
         
-        FlowPane root = new FlowPane();
-        root.getChildren().add(btn);
-        root.getChildren().add(btn2);
+        BorderPane root = new BorderPane();
+        Pane pane = new Pane();
+        pane.getChildren().add(btn);
+        root.setCenter(pane);
         
         Scene scene = new Scene(root, 600, 600);
         
