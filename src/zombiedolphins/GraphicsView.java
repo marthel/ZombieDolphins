@@ -9,55 +9,64 @@ import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import zombiedolphins.Scenes.Controllable;
+import zombiedolphins.Scenes.InGame;
+import zombiedolphins.Scenes.MainMenu;
 
 /**
  *
  * @author Marthin
  */
 public class GraphicsView extends Application {
+    private StackPane root = new StackPane();
+    private MainMenu mainMenu = new MainMenu(this);
+    private InGame inGame = new InGame(this);
+    
+    
     public GraphicsView(){
         
     }
     
+    public void returnScene(){
+        root.getChildren().remove(root.getChildren().size() - 1);
+    }
+    
+    public void showLobby(){
+        root.getChildren().add(inGame);
+        System.out.println("Hellooo");
+    }
+    
     @Override
     public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World! /Anton");
-            }
-        });
+        root.getChildren().add(mainMenu);
         
-        Button btn2 = new Button();
-        btn2.setText("Say 'Hello World'");
-        btn2.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello!");
-            }
-        });
-        
-        BorderPane root = new BorderPane();
-        Pane pane = new Pane();
-        pane.getChildren().add(btn);
-        root.setCenter(pane);
-        
-        Scene scene = new Scene(root, 600, 600);
-        
-        primaryStage.setTitle("Hello World!");
+        Scene scene = new Scene(root, 1280, 720);
+        primaryStage.setTitle("Zombie Dolphins!");
         primaryStage.setScene(scene);
         primaryStage.show();
+        
+        scene.setOnKeyPressed(new KeyHandler());
+        
+    }
+    private class KeyHandler implements EventHandler<KeyEvent>{
+        @Override
+        public void handle(KeyEvent event){
+            Controllable c = (Controllable)(root.getChildren().get(root.getChildren().size() - 1));
+            c.onKeyEvent(event);
+        }
     }
 }
