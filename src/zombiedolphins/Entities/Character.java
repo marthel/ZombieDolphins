@@ -11,7 +11,7 @@ package zombiedolphins.Entities;
  */
 public abstract class Character extends Entity{
     
-    float moveSpeed = 50f;
+    float moveSpeed = 100f;
     
     public Character(){
         super();

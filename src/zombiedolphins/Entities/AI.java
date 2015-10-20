@@ -18,7 +18,7 @@ public class AI extends Character{
 
     @Override
     public void update(double deltaTime) {
-        
+        //TODO: Use a pathfinding system.
     }
 
     @Override

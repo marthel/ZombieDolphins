@@ -12,6 +12,7 @@ import javafx.scene.canvas.GraphicsContext;
  * @author Anton
  */
 public class Camera extends Entity {
+    Entity followThis;
     
     @Override
     public void update(double deltaTime) {

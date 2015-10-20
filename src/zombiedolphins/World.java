@@ -25,9 +25,12 @@ public class World {
     
     public World(){
         entities = new ArrayList();
+        
         camera = new Camera();
+        
+        //Creates a testplayer and add it to the world.
         KeyMap km = new KeyMap(KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, KeyCode.SPACE, KeyCode.R);
-        Player p = new Player(km, new Image("file:test.png", 100, 100, true, true));
+        Player p = new Player(km, new Image("Textures/test.png", 100, 100, true, true));
         entities.add(p);
     }
     

@@ -8,7 +8,6 @@ package zombiedolphins.Entities;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
 import zombiedolphins.Misc.KeyMap;
 import zombiedolphins.Misc.MoveDirection;
 
@@ -92,9 +91,12 @@ public class Player extends Character {
 
     @Override
     public void draw(GraphicsContext gc, Camera camera) {
-        gc.setFill(Color.BLACK);
-        gc.fillRect(posX, posY, 50, 50);
-        //TODO:FIX draw image.
-        //gc.drawImage(texture, posX, posY, 100, 100);
+        System.out.println("NIKI<3");
+        gc.drawImage(texture, posX, posY, 100, 100);
+        /* TODO:
+        * - Animation
+        * - Draw relative to camera position.
+        */
+        
     }
 }
