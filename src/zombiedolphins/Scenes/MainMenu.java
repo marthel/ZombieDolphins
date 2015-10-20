@@ -44,8 +44,6 @@ public class MainMenu extends VBox implements Controllable{
         });
         
         super.getChildren().add(btnPlay);
-        
-
     }
 
     @Override
