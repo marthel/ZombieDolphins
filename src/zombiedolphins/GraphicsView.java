@@ -6,22 +6,10 @@
 package zombiedolphins;
 
 import javafx.application.Application;
-import static javafx.application.Application.launch;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import zombiedolphins.Scenes.Controllable;
 import zombiedolphins.Scenes.InGame;
@@ -32,9 +20,9 @@ import zombiedolphins.Scenes.MainMenu;
  * @author Marthin
  */
 public class GraphicsView extends Application {
-    private StackPane root = new StackPane();
-    private MainMenu mainMenu = new MainMenu(this);
-    private InGame inGame = new InGame(this);
+    private final StackPane root = new StackPane();
+    private final MainMenu mainMenu = new MainMenu(this);
+    private final InGame inGame = new InGame(this);
     
     
     public GraphicsView(){
@@ -48,6 +36,7 @@ public class GraphicsView extends Application {
     public void showLobby(){
         root.getChildren().add(inGame);
         inGame.requestFocus();
+        inGame.initializeWorld(World.Level.ONE);
     }
     
     @Override
@@ -60,6 +49,7 @@ public class GraphicsView extends Application {
         primaryStage.show();
         
         scene.setOnKeyPressed(new KeyHandler());
+        scene.setOnKeyReleased(new KeyHandler());
         
     }
     private class KeyHandler implements EventHandler<KeyEvent>{
