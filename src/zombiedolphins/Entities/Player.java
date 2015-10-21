@@ -22,58 +22,18 @@ public class Player extends Character {
     private KeyMap keyMap;
     private MoveDirection moveDir;
     private CharacterAnimator playerAnimator;
-    private final Image[] idleDirection = {
-        new Image("Textures/Knugen_idle_up.png"),
-        new Image("Textures/Knugen_idle_down.png"),
-        new Image("Textures/Knugen_idle_right.png"),
-        new Image("Textures/Knugen_idle_left.png")
-    };
-    private final Image[] movingUp = {
-        new Image("Textures/Knugen_moving_up1.png"),
-        new Image("Textures/Knugen_moving_up2.png"),
-        new Image("Textures/Knugen_moving_up3.png"),
-        new Image("Textures/Knugen_idle_up.png"),
-        new Image("Textures/Knugen_moving_up6.png"),
-        new Image("Textures/Knugen_moving_up4.png"),
-        new Image("Textures/Knugen_moving_up5.png"),
-        new Image("Textures/Knugen_idle_up.png")
-    };
-    private final Image[] movingDown = {
-        new Image("Textures/Knugen_moving_down1.png"),
-        new Image("Textures/Knugen_moving_down2.png"),
-        new Image("Textures/Knugen_moving_down3.png"),
-        new Image("Textures/Knugen_idle_down.png"),
-        new Image("Textures/Knugen_moving_down4.png"),
-        new Image("Textures/Knugen_moving_down5.png"),
-        new Image("Textures/Knugen_moving_down6.png"),
-        new Image("Textures/Knugen_idle_down.png")
-    };
-    private final Image[] movingRight = {
-        new Image("Textures/Knugen_moving_right1.png"),
-        new Image("Textures/Knugen_moving_right2.png"),
-        new Image("Textures/Knugen_moving_right3.png"),
-        new Image("Textures/Knugen_moving_right4.png"),
-        new Image("Textures/Knugen_moving_right5.png"),
-        new Image("Textures/Knugen_moving_right6.png"),
-        new Image("Textures/Knugen_moving_right7.png"),
-        new Image("Textures/Knugen_moving_right8.png")
-    };
-    private final Image[] movingLeft = {
-        new Image("Textures/Knugen_moving_left1.png"),
-        new Image("Textures/Knugen_moving_left2.png"),
-        new Image("Textures/Knugen_moving_left3.png"),
-        new Image("Textures/Knugen_moving_left4.png"),
-        new Image("Textures/Knugen_moving_left5.png"),
-        new Image("Textures/Knugen_moving_left6.png"),
-        new Image("Textures/Knugen_moving_left7.png"),
-        new Image("Textures/Knugen_moving_left8.png")
-    };
-
+    private final int frameWidth = 17;
+    private final int frameHeight = 32;
+    private final int [] framesUp = {4,5,6,7,8,9,10,11};
+    private final int [] framesDown = {20,21,22,23,24,25,26,27};
+    private final int [] framesLeft = {12,13,14,15,16,17,18,19};
+    private final int [] framesRight = {28,29,30,31,32,33,34,35};
+    private final int [] framesIdle = {0,1,2,3};
     public Player(KeyMap keyMap, Image texture) {
         super();
         this.keyMap = keyMap;
         super.texture = texture;
-        playerAnimator = new CharacterAnimator(movingUp,movingDown,movingLeft,movingRight,this.texture);
+        playerAnimator = new CharacterAnimator(framesUp,framesDown,framesLeft,framesRight,framesIdle);
         moveDir = new MoveDirection();
     }
 
@@ -108,16 +68,12 @@ public class Player extends Character {
             playerAnimator.stop();
             if (keyMap.moveUp == event.getCode()) {
                 moveDir.setUp(false);
-                texture = idleDirection[0];
             } else if (keyMap.moveDown == event.getCode()) {
                 moveDir.setDown(false);
-                texture = idleDirection[1];
             } else if (keyMap.moveRight == event.getCode()) {
                 moveDir.setRight(false);
-                texture = idleDirection[2];
             } else if (keyMap.moveLeft == event.getCode()) {
                 moveDir.setLeft(false);
-                texture = idleDirection[3];
             }
         }
     }
@@ -144,7 +100,10 @@ public class Player extends Character {
     @Override
     public void draw(GraphicsContext gc, Camera camera) {
         //System.out.println("NIKI<3");
-        gc.drawImage(playerAnimator.getTexture(), posX, posY);
+        //gc.drawImage(playerAnimator.getTexture(), posX, posY);
+        gc.drawImage(texture,
+                    playerAnimator.getCurretFrame()*frameWidth,0,frameWidth,frameHeight,
+                    posX,posY,frameWidth*2,frameHeight*2);
         /* TODO:
          * - Draw relative to camera position.
          */
