@@ -32,37 +32,37 @@ public class Player extends Character {
     private final Image[] movingUp = {
         new Image("Textures/Knugen_moving_up1.png"),
         new Image("Textures/Knugen_moving_up2.png"),
-        new Image("Textures/Knugen_moving_up5.png"),
+        new Image("Textures/Knugen_moving_up3.png"),
         new Image("Textures/Knugen_idle_up.png"),
         new Image("Textures/Knugen_moving_up6.png"),
         new Image("Textures/Knugen_moving_up4.png"),
-        new Image("Textures/Knugen_moving_up3.png"),
+        new Image("Textures/Knugen_moving_up5.png"),
         new Image("Textures/Knugen_idle_up.png")
     };
     private final Image[] movingDown = {
         new Image("Textures/Knugen_moving_down1.png"),
         new Image("Textures/Knugen_moving_down2.png"),
-        new Image("Textures/Knugen_moving_down6.png"),
+        new Image("Textures/Knugen_moving_down3.png"),
         new Image("Textures/Knugen_idle_down.png"),
         new Image("Textures/Knugen_moving_down4.png"),
         new Image("Textures/Knugen_moving_down5.png"),
-        new Image("Textures/Knugen_moving_down3.png"),
+        new Image("Textures/Knugen_moving_down6.png"),
         new Image("Textures/Knugen_idle_down.png")
     };
     private final Image[] movingRight = {
-        new Image("Textures/Knugen_moving_right3.png"),
-        new Image("Textures/Knugen_moving_right2.png"),
         new Image("Textures/Knugen_moving_right1.png"),
+        new Image("Textures/Knugen_moving_right2.png"),
+        new Image("Textures/Knugen_moving_right3.png"),
         new Image("Textures/Knugen_moving_right4.png"),
-        new Image("Textures/Knugen_moving_right6.png"),
         new Image("Textures/Knugen_moving_right5.png"),
+        new Image("Textures/Knugen_moving_right6.png"),
         new Image("Textures/Knugen_moving_right7.png"),
         new Image("Textures/Knugen_moving_right8.png")
     };
     private final Image[] movingLeft = {
-        new Image("Textures/Knugen_moving_left3.png"),
-        new Image("Textures/Knugen_moving_left2.png"),
         new Image("Textures/Knugen_moving_left1.png"),
+        new Image("Textures/Knugen_moving_left2.png"),
+        new Image("Textures/Knugen_moving_left3.png"),
         new Image("Textures/Knugen_moving_left4.png"),
         new Image("Textures/Knugen_moving_left5.png"),
         new Image("Textures/Knugen_moving_left6.png"),
@@ -90,7 +90,7 @@ public class Player extends Character {
                     if (currentFrame > movingUp.length) {
                         currentFrame = 0;
                     }
-                    if (currentNS - prevNS > 12000000) {
+                    if (currentNS - prevNS > 10000000) {
                         currentFrame++;
                         texture = movingUp[currentFrame];
                     }
@@ -99,7 +99,7 @@ public class Player extends Character {
                     if (currentFrame > movingDown.length) {
                         currentFrame = 0;
                     }
-                    if (currentNS - prevNS > 12000000) {
+                    if (currentNS - prevNS > 10000000) {
                         currentFrame++;
                         texture = movingDown[currentFrame];
                     }
@@ -200,7 +200,6 @@ public class Player extends Character {
         //System.out.println("NIKI<3");
         gc.drawImage(texture, posX, posY, 36, 64);
         /* TODO:
-         * - Animation
          * - Draw relative to camera position.
          */
 
