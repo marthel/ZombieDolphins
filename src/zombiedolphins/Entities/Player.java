@@ -75,12 +75,6 @@ public class Player extends Character {
         super.texture = texture;
         playerAnimator = new CharacterAnimator(movingUp,movingDown,movingLeft,movingRight);
         moveDir = new MoveDirection();
-        initAnimation();
-
-    }
-
-    private void initAnimation() {
-        
     }
 
     public KeyMap getKeyMap() {
