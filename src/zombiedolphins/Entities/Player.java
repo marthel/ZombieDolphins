@@ -103,7 +103,7 @@ public class Player extends Character {
         //gc.drawImage(playerAnimator.getTexture(), posX, posY);
         gc.drawImage(texture,
                     playerAnimator.getCurretFrame()*frameWidth,0,frameWidth,frameHeight,
-                    posX,posY,frameWidth*2,frameHeight*2);
+                    posX,posY,frameWidth*1.3,frameHeight*1.3);
         /* TODO:
          * - Draw relative to camera position.
          */
