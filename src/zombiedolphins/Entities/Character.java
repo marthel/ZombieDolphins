@@ -9,11 +9,15 @@ package zombiedolphins.Entities;
  *
  * @author Anton
  */
-public abstract class Character extends Entity{
-    
+public abstract class Character extends Entity {
+
     float moveSpeed = 100f;
-    
-    public Character(){
+
+    public Character() {
         super();
+    }
+
+    public Character(float x, float y) {
+        super(x, y);
     }
 }

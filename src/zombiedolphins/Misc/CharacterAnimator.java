@@ -62,9 +62,8 @@ public class CharacterAnimator extends AnimationTimer {
 
     @Override
     public void handle(long currentNS) {
-        if (currentNS - prevNS > 16000000) {
+        if (currentNS - prevNS > 11000000) {
             nextFrame++;
-            System.out.println(nextFrame);
         }
         if (moveDir.getUp()) {
             if (nextFrame >= framesUp.length) {

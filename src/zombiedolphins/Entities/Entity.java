@@ -13,14 +13,36 @@ import javafx.scene.image.Image;
  * @author Anton
  */
 public abstract class Entity {
-    
+
     float posX = 0, posY = 0;
     Image texture;
-    
-    public Entity(){
-        
+
+    public Entity() {
+
     }
-    
+
+    public Entity(float x, float y) {
+        posX = x;
+        posY = y;
+    }
+
+    public void setX(float x) {
+        posX = x;
+    }
+
+    public void setY(float y) {
+        posY = y;
+    }
+
+    public float getX() {
+        return posX;
+    }
+
+    public float getY() {
+        return posY;
+    }
+
     public abstract void draw(GraphicsContext gc, Camera camera);
+
     public abstract void update(double deltaTime);
 }
