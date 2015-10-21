@@ -23,7 +23,7 @@ public class CharacterAnimator extends AnimationTimer {
     private Image[] movingLeft;
     private Image[] movingRight;
 
-    public CharacterAnimator(Image[] up, Image[] down, Image[] left, Image[] right) {
+    public CharacterAnimator(Image[] up, Image[] down, Image[] left, Image[] right,Image texture) {
         currentFrame = 0;
         prevNS = 0;
         moveDir = new MoveDirection();
@@ -31,6 +31,7 @@ public class CharacterAnimator extends AnimationTimer {
         movingDown  = down;
         movingLeft = left;
         movingRight = right;
+        this.texture = texture;
     }
 
     public void start(MoveDirection moveDir) {

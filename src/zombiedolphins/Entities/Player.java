@@ -73,7 +73,7 @@ public class Player extends Character {
         super();
         this.keyMap = keyMap;
         super.texture = texture;
-        playerAnimator = new CharacterAnimator(movingUp,movingDown,movingLeft,movingRight);
+        playerAnimator = new CharacterAnimator(movingUp,movingDown,movingLeft,movingRight,this.texture);
         moveDir = new MoveDirection();
     }
 
