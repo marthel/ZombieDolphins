@@ -9,6 +9,7 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import zombiedolphins.Misc.CharacterAnimator;
 import zombiedolphins.Misc.KeyMap;
 import zombiedolphins.Misc.MoveDirection;
 
@@ -20,9 +21,7 @@ public class Player extends Character {
 
     private KeyMap keyMap;
     private MoveDirection moveDir;
-    private AnimationTimer animation;
-    private int currentFrame;
-    private long prevNS;
+    private CharacterAnimator playerAnimator;
     private final Image[] idleDirection = {
         new Image("Textures/Knugen_idle_up.png"),
         new Image("Textures/Knugen_idle_down.png"),
@@ -74,61 +73,14 @@ public class Player extends Character {
         super();
         this.keyMap = keyMap;
         super.texture = texture;
-        currentFrame = 0;
-        prevNS = 0;
+        playerAnimator = new CharacterAnimator(movingUp,movingDown,movingLeft,movingRight);
         moveDir = new MoveDirection();
         initAnimation();
 
     }
 
     private void initAnimation() {
-        animation = new AnimationTimer() {
-            @Override
-            public void handle(long currentNS) {
-
-                if (moveDir.getUp()) {
-                    if (currentFrame > movingUp.length) {
-                        currentFrame = 0;
-                    }
-                    if (currentNS - prevNS > 10000000) {
-                        currentFrame++;
-                        texture = movingUp[currentFrame];
-                    }
-
-                } else if (moveDir.getDown()) {
-                    if (currentFrame > movingDown.length) {
-                        currentFrame = 0;
-                    }
-                    if (currentNS - prevNS > 10000000) {
-                        currentFrame++;
-                        texture = movingDown[currentFrame];
-                    }
-
-                }
-
-                else if (moveDir.getLeft()) {
-                   if (currentFrame > movingLeft.length) {
-                        currentFrame = 0;
-                    }
-                    if (currentNS - prevNS > 12000000) {
-                        currentFrame++;
-                        texture = movingLeft[currentFrame];
-                    }
-
-                } else if (moveDir.getRight()) {
-                    if (currentFrame > movingRight.length) {
-                        currentFrame = 0;
-                    }
-                    if (currentNS - prevNS > 12000000) {
-                        currentFrame++;
-                        texture = movingRight[currentFrame];
-                    }
-
-                }
-
-                prevNS = currentNS;
-            }
-        };
+        
     }
 
     public KeyMap getKeyMap() {
@@ -142,7 +94,7 @@ public class Player extends Character {
     public void handleInput(KeyEvent event) {
         if (KeyEvent.KEY_PRESSED.equals(event.getEventType())) {
             System.out.print("Pressed: ");
-            animation.start();
+            playerAnimator.start(moveDir);
             if (keyMap.moveUp == event.getCode()) {
                 moveDir.setUp(true);
                 System.out.println("Up");
@@ -159,7 +111,7 @@ public class Player extends Character {
             }
         }
         if (KeyEvent.KEY_RELEASED.equals(event.getEventType())) {
-            animation.stop();
+            playerAnimator.stop();
             if (keyMap.moveUp == event.getCode()) {
                 moveDir.setUp(false);
                 texture = idleDirection[0];
@@ -198,7 +150,7 @@ public class Player extends Character {
     @Override
     public void draw(GraphicsContext gc, Camera camera) {
         //System.out.println("NIKI<3");
-        gc.drawImage(texture, posX, posY);
+        gc.drawImage(playerAnimator.getTexture(), posX, posY);
         /* TODO:
          * - Draw relative to camera position.
          */
