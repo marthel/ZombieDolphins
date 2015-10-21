@@ -106,7 +106,7 @@ public class Player extends Character {
 
                 }
 
-                if (moveDir.getLeft()) {
+                else if (moveDir.getLeft()) {
                    if (currentFrame > movingLeft.length) {
                         currentFrame = 0;
                     }
@@ -198,7 +198,7 @@ public class Player extends Character {
     @Override
     public void draw(GraphicsContext gc, Camera camera) {
         //System.out.println("NIKI<3");
-        gc.drawImage(texture, posX, posY, 36, 64);
+        gc.drawImage(texture, posX, posY);
         /* TODO:
          * - Draw relative to camera position.
          */
