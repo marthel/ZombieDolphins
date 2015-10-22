@@ -5,13 +5,14 @@
  */
 package zombiedolphins.Misc;
 
+import java.io.Serializable;
 import javafx.scene.input.KeyCode;
 
 /**
  *
  * @author Anton
  */
-public class KeyMap {
+public class KeyMap implements Serializable{
 
     public KeyCode moveUp;
     public KeyCode moveDown;
@@ -27,6 +28,26 @@ public class KeyMap {
         this.moveLeft = left;
         this.moveRight = right;
         this.shoot = shoot;
+        this.reload = reload;
+    }
+    public KeyMap() {
+    }
+    public void setUp(KeyCode up){
+        this.moveUp = up;
+    }
+    public void setDown(KeyCode down){
+        this.moveDown = down;
+    }
+    public void setLeft(KeyCode left){
+        this.moveLeft = left;
+    }
+    public void setRight(KeyCode right){
+        this.moveRight = right;
+    }
+    public void setShoot(KeyCode shoot){
+        this.shoot = shoot;
+    }
+    public void setReload(KeyCode reload){
         this.reload = reload;
     }
 }
