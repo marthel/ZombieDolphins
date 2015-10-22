@@ -193,7 +193,6 @@ public class Player extends Character {
 
     @Override
     public void draw(GraphicsContext gc, Camera camera) {
-        //System.out.println("NIKI<3");
         gc.drawImage(texture, posX, posY, 36, 64);
         /* TODO:
          * - Animation
