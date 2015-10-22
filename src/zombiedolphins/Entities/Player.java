@@ -90,11 +90,11 @@ public class Player extends Character {
     private void reload() {
         bulletCount = 0;
     }
-    public int getAmmo(){
-        //if(isShooting && !coolDown)
-            return bulletCount;
-        //return 0;
+
+    public int getAmmo() {
+        return bulletCount;
     }
+
     public void handleInput(KeyEvent event) {
         if (KeyEvent.KEY_PRESSED.equals(event.getEventType())) {
             playerAnimator.start(moveDir);
