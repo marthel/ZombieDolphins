@@ -34,27 +34,13 @@ public class World {
         entities = new ArrayList();
         pathFinder = new PathFinder();
         camera = new Camera();
-
-        ///creates bullets
-        ArrayList<Bullet> p1Bullets = new ArrayList();
-        ArrayList<Bullet> p2Bullets = new ArrayList();
-        for (int i = 0; i < 30; i++) {
-            p1Bullets.add(new Bullet(new Image("Textures/bullet.png", 3, 3, true, true)));
-            p2Bullets.add(new Bullet(new Image("Textures/bullet.png", 3, 3, true, true)));
-        }
-        for (Bullet b : p1Bullets) {
-            entities.add(b);
-        }
-        for (Bullet b : p2Bullets) {
-            entities.add(b);
-        }
+        
         //Creates a testplayer and add it to the world.
-
         KeyMap km = new KeyMap(KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, KeyCode.SPACE, KeyCode.R);
-        Player p = new Player(250, 300, km, new Image("Textures/Knugen.png", 612, 32, true, true), p1Bullets);
+        Player p1 = new Player(250, 300, km, new Image("Textures/Knugen.png", 612, 32, true, true),this);
         KeyMap km2 = new KeyMap(KeyCode.UP, KeyCode.DOWN, KeyCode.LEFT, KeyCode.RIGHT, KeyCode.O, KeyCode.P);
-        Player p2 = new Player(30, 250, km2, new Image("Textures/Vickan.png", 612, 32, true, true), p2Bullets);
-        entities.add(p);
+        Player p2 = new Player(30, 250, km2, new Image("Textures/Vickan.png", 612, 32, true, true),this);
+        entities.add(p1);
         entities.add(p2);
         
         //Obstacles
@@ -74,7 +60,7 @@ public class World {
         entities.add(o5);
         entities.add(o6);
         
-        AI ai = new AI(this,p);
+        AI ai = new AI(this,p1);
         ai.setX(50);
         ai.setY(100);
         entities.add(ai);
@@ -90,22 +76,43 @@ public class World {
         return pathFinder.findPath(obstacles, start, end);
     }
 
-    public void addBullets() {
-        
-    }
-
     public void update(double delta) {
         for (Entity e : entities) {
             e.update(delta);
         }
-
     }
-
+    public void addBullet(Bullet b) {
+        entities.add(b);
+    }
+    public void removeDeadBullets() {
+        for (Entity e : entities) {
+            if (e instanceof Bullet) {
+                Bullet b = (Bullet) e;
+                if(!b.getStatus()){
+                    entities.remove(b);
+                }
+            }
+        }
+    }
     public void draw(double delta, GraphicsContext gc) {
         for (Entity e : entities) {
             e.draw(gc, camera);
         }
     }
+
+    public int[] getAmmo() {
+        int[] ammo = new int[2];
+        int i=0;
+        for (Entity e : entities) {
+            if (e instanceof Player) {
+                Player p = (Player) e;
+                ammo[i]=p.getAmmo();
+                i++;
+            }
+        }
+        return ammo;
+    }
+    
 
     public void handleInput(KeyEvent event) {
 

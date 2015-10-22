@@ -13,6 +13,7 @@ import javafx.scene.input.KeyEvent;
 import zombiedolphins.Misc.CharacterAnimator;
 import zombiedolphins.Misc.KeyMap;
 import zombiedolphins.Misc.MoveDirection;
+import zombiedolphins.World;
 
 /**
  *
@@ -22,10 +23,10 @@ public class Player extends Character {
 
     private KeyMap keyMap;
     private long prevNS;
+    private World world;
     AnimationTimer coolDownTimer;
     private MoveDirection moveDir;
     private CharacterAnimator playerAnimator;
-    private ArrayList<Bullet> bullets;
     private int bulletCount;
     private int magazine;
     private boolean isShooting, coolDown;
@@ -38,16 +39,16 @@ public class Player extends Character {
     private final int[] framesRight = {28, 29, 30, 31, 32, 33, 34, 35};
     private final int[] framesIdle = {0, 1, 2, 3};
 
-    public Player(float x, float y, KeyMap keyMap, Image texture, ArrayList<Bullet> bullets) {
+    public Player(float x, float y, KeyMap keyMap, Image texture, World world) {
         super(x, y);
+        this.world = world;
         this.keyMap = keyMap;
         super.texture = texture;
         playerAnimator = new CharacterAnimator(framesUp, framesDown, framesLeft, framesRight, framesIdle);
         moveDir = new MoveDirection();
         lastDir = 1;
-        this.bullets = bullets;
         bulletCount = 0;
-        magazine = bullets.size();
+        magazine = 30;
         coolDown = false;
         coolDownTimer = new AnimationTimer() {
             @Override
@@ -61,10 +62,10 @@ public class Player extends Character {
                 coolDown = false;
                 super.stop();
             }
-
+            
             @Override
             public void handle(long currentNS) {
-                if (currentNS - prevNS > 12000000) {
+                if (currentNS - prevNS > 15000000) {
                     coolDown = false;
                 }
                 prevNS = currentNS;
@@ -79,16 +80,22 @@ public class Player extends Character {
 
     private void shoot() {
         if (bulletCount < magazine) {
-            bullets.get(bulletCount).setDirection(lastDir);
-            bullets.get(bulletCount).setX(this.posX + frameWidth + 3);
-            bullets.get(bulletCount).setY(this.posY + frameHeight);
-            bullets.get(bulletCount).setState(true);
+            Bullet b = new Bullet(new Image("Textures/bullet.png", 3, 3, true, true));
+            world.addBullet(b);
+            b.setDirection(lastDir);
+            b.setX(this.posX + frameWidth + 3);
+            b.setY(this.posY + frameHeight);
+            b.activate();
             bulletCount++;
         }
     }
 
     private void reload() {
         bulletCount = 0;
+    }
+
+    public int getAmmo() {
+        return bulletCount;
     }
 
     public void handleInput(KeyEvent event) {
