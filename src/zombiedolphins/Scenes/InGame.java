@@ -101,7 +101,6 @@ public class InGame extends BorderPane implements Controllable {
     }
 
     public void timerUpdate(long now) {
-
         updateAmmoCount();
         double deltaMs = ((double) now - lastTick) / 1000000000;
         lastTick = (double) now;

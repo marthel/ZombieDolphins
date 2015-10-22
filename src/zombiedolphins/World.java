@@ -25,15 +25,9 @@ public class World {
     private ArrayList<Entity> entities;
     private Camera camera;
     Player p;
-    Thread t1;
     public World() {
         entities = new ArrayList();
         camera = new Camera();
-        t1 = new Thread(new Runnable() {
-            public void run() {
-                removeDeadBullets();
-            }
-        });t1.start();
         
         //Creates a testplayer and add it to the world.
         KeyMap km = new KeyMap(KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, KeyCode.SPACE, KeyCode.R);
@@ -43,7 +37,6 @@ public class World {
         entities.add(p1);
         entities.add(p2);
     }
-
     public void update(double delta) {
         for (Entity e : entities) {
             e.update(delta);

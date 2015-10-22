@@ -28,7 +28,6 @@ public class Bullet extends Entity {
         direction = 0;
 
     }
-
     public void activate() {
         isActive = true;
     }
