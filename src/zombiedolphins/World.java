@@ -56,7 +56,7 @@ public class World {
         for (Entity e : entities) {
             if (e instanceof Bullet) {
                 Bullet b = (Bullet) e;
-                if(b.getStatus()){
+                if(!b.getStatus()){
                     entities.remove(b);
                 }
             }

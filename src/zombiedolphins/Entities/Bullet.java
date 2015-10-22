@@ -16,7 +16,7 @@ import zombiedolphins.Misc.MoveDirection;
 public class Bullet extends Entity {
 
     MoveDirection moveDir;
-    private boolean isActive,isDead;
+    private boolean isActive;
     private float moveSpeed = 350f;
     private int direction;
 
@@ -24,9 +24,8 @@ public class Bullet extends Entity {
         super(500, 300);
         super.texture = texture;
         moveDir = new MoveDirection();
-        isActive = false;
+        isActive = true;
         direction = 0;
-        isDead=false;
 
     }
 
