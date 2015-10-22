@@ -24,15 +24,17 @@ public class AI extends Character{
     ArrayList<PathNode> wayPoints;
     ArrayList<Player> players;
     private double health;
-    
+  
     Player p1;
+    
+    double timeSinceLastSearch = 0;
     
     public AI(World world){
         super();
         this.world = world;
         super.texture = AI.dolphinTexture;
         players = getPlayers();
-        moveSpeed = 50f;
+        moveSpeed = 75f;
         rect.setWidth(32);
         rect.setHeight(32);
         health = 100;
@@ -72,9 +74,14 @@ public class AI extends Character{
     @Override
     public void update(double deltaTime) {
         //TODO: Use a pathfinding system.
-        wayPoints = world.getPath(this, findTarget());
+        
+        timeSinceLastSearch+=deltaTime;
+        if(timeSinceLastSearch > 0.5f){
+            wayPoints = world.getPath(this, findTarget());
+            timeSinceLastSearch = 0;
+        }
 
-        if(deltaTime > 1)
+        if(deltaTime > 1 || wayPoints == null)
             return;
         
         if(wayPoints.size()> 0){
@@ -94,7 +101,6 @@ public class AI extends Character{
         for(Entity e : world.getEntities()){
             if(e instanceof Bullet){
                 if(e.rect.intersects(this.rect.getBoundsInLocal())){
-                    System.out.println("BULLET HIT!");
                     world.getEntities().remove(e);
                     health-=25;
                     if(health < 0){
@@ -121,13 +127,10 @@ public class AI extends Character{
                                             respawn.setX((int)(Math.random() * 1280));
                                             respawn.setY((int)(Math.random() * 520));
                                             collision = true;
-                                            System.out.println("collision");
-
                                         }
                                     }
                                 }
                             }
-                            System.out.println("HELLO");
                             world.getEntities().add(respawn);
                         }
                     }
