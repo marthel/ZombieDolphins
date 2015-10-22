@@ -12,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -23,19 +24,23 @@ import zombiedolphins.World;
  *
  * @author anton
  */
-public class InGame extends BorderPane implements Controllable{
+public class InGame extends BorderPane implements Controllable {
+
     GraphicsView graphicsView;
     Canvas gameCanvas;
     GraphicsContext gc;
     AnimationTimer timer;
     World world;
-    
+    HBox hBox;
+    Label p1Ammo;
+    Label p2Ammo;
+    private int[] ammo;
     double lastTick = 0;
-    
-    public InGame(GraphicsView gv){
+
+    public InGame(GraphicsView gv) {
         this.graphicsView = gv;
         super.setStyle("-fx-background-color: yellow;");
-        
+        ammo = new int[2];
         timer = new AnimationTimer() {
 
             @Override
@@ -48,46 +53,58 @@ public class InGame extends BorderPane implements Controllable{
         Button btnReturn = new Button("Return");
         btnReturn.setMinWidth(100);
         btnReturn.setMinHeight(20);
-        
+
         btnReturn.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override public void handle(ActionEvent e) {
-                        graphicsView.returnScene();
-                }
+            @Override
+            public void handle(ActionEvent e) {
+                graphicsView.returnScene();
+            }
         });
-        
+
         //HUD
-        HBox hBox = new HBox();
-        super.setBottom(hBox); 
+        hBox = new HBox();
+        super.setBottom(hBox);
         hBox.getChildren().add(btnReturn);
         hBox.setStyle("-fx-background-color: gray;");
         hBox.setMinHeight(200);
         hBox.setAlignment(Pos.TOP_CENTER);
-        
+
         //Canvas
-        gameCanvas = new Canvas(1280,520);
+        gameCanvas = new Canvas(1280, 520);
         gc = gameCanvas.getGraphicsContext2D();
         super.setCenter(gameCanvas);
         gc.setStroke(Color.BLUE);
         gc.setFill(Color.WHITE);
         gc.setLineWidth(5);
-        gc.strokeLine(10,10,20, 20);
+        gc.strokeLine(10, 10, 20, 20);
         gc.fillRect(0, 0, 1280, 620);
     }
-    
-    public void initializeWorld(World.Level level){
-        switch(level)
-        {
+
+    public void initializeWorld(World.Level level) {
+        switch (level) {
             case ONE:
                 world = new World();
                 timer.start();
                 break;
         }
     }
-    
-    public void timerUpdate(long now){
 
-        double deltaMs = ((double)now - lastTick)/1000000000;
-        lastTick = (double)now;
+    private void updateAmmoCount() {
+        ammo = world.getAmmo();
+        hBox.getChildren().remove(p1Ammo);
+        p1Ammo = new Label("\tPlayer 1 Ammo: " + (30 - ammo[0]));
+        hBox.getChildren().add(p1Ammo);
+        hBox.getChildren().remove(p2Ammo);
+        p2Ammo = new Label("\tPlayer 2 Ammo: " + (30 - ammo[1]));
+        hBox.getChildren().add(p2Ammo);
+
+    }
+
+    public void timerUpdate(long now) {
+
+        updateAmmoCount();
+        double deltaMs = ((double) now - lastTick) / 1000000000;
+        lastTick = (double) now;
         world.update(deltaMs);
         //Clear
         gc.setFill(Color.WHITE);

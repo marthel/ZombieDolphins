@@ -24,6 +24,7 @@ public class World {
 
     private ArrayList<Entity> entities;
     private Camera camera;
+    Player p;
 
     public World() {
         entities = new ArrayList();
@@ -46,15 +47,11 @@ public class World {
         //Creates a testplayer and add it to the world.
 
         KeyMap km = new KeyMap(KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, KeyCode.SPACE, KeyCode.R);
-        Player p = new Player(250, 300, km, new Image("Textures/Knugen.png", 612, 32, true, true), p1Bullets);
+        p = new Player(250, 300, km, new Image("Textures/Knugen.png", 612, 32, true, true), p1Bullets);
         KeyMap km2 = new KeyMap(KeyCode.UP, KeyCode.DOWN, KeyCode.LEFT, KeyCode.RIGHT, KeyCode.O, KeyCode.P);
         Player p2 = new Player(30, 250, km2, new Image("Textures/Vickan.png", 612, 32, true, true), p2Bullets);
         entities.add(p);
         entities.add(p2);
-    }
-
-    public void addBullets() {
-
     }
 
     public void update(double delta) {
@@ -69,6 +66,20 @@ public class World {
             e.draw(gc, camera);
         }
     }
+
+    public int[] getAmmo() {
+        int[] ammo = new int[2];
+        int i=0;
+        for (Entity e : entities) {
+            if (e instanceof Player) {
+                Player p = (Player) e;
+                ammo[i]=p.getAmmo();
+                i++;
+            }
+        }
+        return ammo;
+    }
+    
 
     public void handleInput(KeyEvent event) {
 
