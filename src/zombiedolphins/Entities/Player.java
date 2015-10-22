@@ -27,8 +27,8 @@ public class Player extends Character {
     private int magazine;
     private boolean isShooting;
     private int lastDir;
-    private long lastFire;
-    private final long coolDown = 400;
+    private long prevTime;
+    private final long coolDown = 200;
     private final int frameWidth = 17;
     private final int frameHeight = 32;
     private final int[] framesUp = {4, 5, 6, 7, 8, 9, 10, 11};
@@ -123,10 +123,10 @@ public class Player extends Character {
             lastDir = 2;
         }
         if (isShooting) {
-            if (System.currentTimeMillis() - lastFire < coolDown) {
+            if (System.currentTimeMillis() - prevTime < coolDown) {
                 return;
             }
-            lastFire = System.currentTimeMillis();
+            prevTime = System.currentTimeMillis();
             shoot();
         }
 

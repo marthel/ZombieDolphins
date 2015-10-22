@@ -17,7 +17,6 @@ public class CharacterAnimator extends AnimationTimer {
     private int currentFrame, nextFrame;
     private long prevNS;
     private MoveDirection moveDir;
-    private Image texture;
     private int[] framesUp;
     private int[] framesDown;
     private int[] framesLeft;
@@ -44,6 +43,7 @@ public class CharacterAnimator extends AnimationTimer {
     @Override
     public void stop() {
         nextFrame = 0;
+        prevNS=0;
         if (moveDir.getUp()) {
             currentFrame = framesIdle[0];
 
@@ -62,37 +62,38 @@ public class CharacterAnimator extends AnimationTimer {
 
     @Override
     public void handle(long currentNS) {
-        if (currentNS - prevNS > 11000000) {
+        if(prevNS==0){
+            prevNS=currentNS;
+        }
+        if (currentNS - prevNS > 11111111) {
             nextFrame++;
         }
         if (moveDir.getUp()) {
             if (nextFrame >= framesUp.length) {
                 nextFrame = 0;
             }
-
+            prevNS = currentNS;
             currentFrame = framesUp[nextFrame];
 
         } else if (moveDir.getDown()) {
             if (nextFrame >= framesDown.length) {
                 nextFrame = 0;
             }
+            prevNS = currentNS;
             currentFrame = framesDown[nextFrame];
-
         } else if (moveDir.getLeft()) {
             if (nextFrame >= framesLeft.length) {
                 nextFrame = 0;
             }
+            prevNS = currentNS;
             currentFrame = framesLeft[nextFrame];
-
         } else if (moveDir.getRight()) {
             if (nextFrame >= framesRight.length) {
                 nextFrame = 0;
             }
+            prevNS = currentNS;
             currentFrame = framesRight[nextFrame];
-
         }
-
-        prevNS = currentNS;
     }
 
     public int getCurretFrame() {
