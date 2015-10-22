@@ -33,7 +33,7 @@ public class World {
     private Camera camera;
     private PathFinder pathFinder;
     
-    public World() {
+    public World(KeyMap km) {
         entities = new CopyOnWriteArrayList();
         pathFinder = new PathFinder();
         camera = new Camera();
@@ -41,7 +41,7 @@ public class World {
         //
         generateObstacles();
         //Creates a testplayer and add it to the world.
-        KeyMap km = new KeyMap(KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, KeyCode.SPACE, KeyCode.R);
+        //KeyMap km = new KeyMap(KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, KeyCode.SPACE, KeyCode.R);
         Player p1 = new Player(250, 300, km, new Image("Textures/Knugen.png", 612, 32, true, true),this);
         KeyMap km2 = new KeyMap(KeyCode.UP, KeyCode.DOWN, KeyCode.LEFT, KeyCode.RIGHT, KeyCode.O, KeyCode.P);
         Player p2 = new Player(300, 250, km2, new Image("Textures/Vickan.png", 612, 32, true, true),this);
@@ -73,6 +73,29 @@ public class World {
             Obstacle o1 = new Obstacle(300, 320 + i*32);
             entities.add(o);
             entities.add(o1);
+            
+            Obstacle o2 = new Obstacle(128 + i*32, 160);
+            Obstacle o3 = new Obstacle(398 + i*32, 320);
+            entities.add(o2);
+            entities.add(o3);
+            
+            Obstacle o4 = new Obstacle(720 + i*32, 160);
+            Obstacle o5 = new Obstacle(480 + i*32, 320);
+            entities.add(o4);
+            entities.add(o5);
+            
+            Obstacle o6 = new Obstacle(880 + i*32, 224);
+            Obstacle o7 = new Obstacle(548 + i*32, 480);
+            entities.add(o6);
+            entities.add(o7);
+            
+            
+        }
+        for(int i = 0; i < 3;i++){
+            Obstacle o8 = new Obstacle(880, 296+ i*32);
+            Obstacle o9 = new Obstacle(480, 548 + i*32);
+            entities.add(o8);
+            entities.add(o9);
         }
         
     }

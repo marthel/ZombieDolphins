@@ -99,6 +99,37 @@ public class AI extends Character{
                     health-=25;
                     if(health < 0){
                         world.getEntities().remove(this);
+                        
+                        for(int i = 0; i < 2; i++)
+                        {
+                            AI respawn;
+
+                            int newX = (int)(Math.random() * 1280);
+                            int newY = (int)(Math.random() * 520);
+                            boolean collision = true;
+
+                            respawn = new AI(world);
+                            respawn.setX(newX);
+                            respawn.setY(newY);
+
+
+                            while(collision){
+                                collision = false;
+                                for(Entity o : world.getEntities()){
+                                    if(o instanceof Obstacle){
+                                        if(respawn.rect.intersects(o.rect.getBoundsInLocal())){
+                                            respawn.setX((int)(Math.random() * 1280));
+                                            respawn.setY((int)(Math.random() * 520));
+                                            collision = true;
+                                            System.out.println("collision");
+
+                                        }
+                                    }
+                                }
+                            }
+                            System.out.println("HELLO");
+                            world.getEntities().add(respawn);
+                        }
                     }
                 }
             }
