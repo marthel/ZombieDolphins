@@ -15,23 +15,24 @@ import zombiedolphins.Misc.MoveDirection;
  */
 public class Bullet extends Entity {
 
+    private static Image bulletTexture;
     MoveDirection moveDir;
     private boolean isActive;
     private float moveSpeed = 350f;
     private int direction;
 
-    public Bullet(Image texture) {
+    public Bullet() {
         super(500, 300);
-        super.texture = texture;
+        super.texture = Bullet.bulletTexture;
         moveDir = new MoveDirection();
         isActive = true;
         direction = 0;
-
     }
-    public void activate() {
-        isActive = true;
+    
+    public static void setTexture(Image image){
+        Bullet.bulletTexture = image;
     }
-
+  
     public void setDirection(int dir) {
         direction = dir;
     }
