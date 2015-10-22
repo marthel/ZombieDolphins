@@ -22,15 +22,15 @@ import zombiedolphins.World;
 public class Player extends Character {
 
     private KeyMap keyMap;
-    private long prevNS;
     private World world;
-    AnimationTimer coolDownTimer;
     private MoveDirection moveDir;
     private CharacterAnimator playerAnimator;
     private int bulletCount;
     private int magazine;
-    private boolean isShooting, coolDown;
+    private boolean isShooting;
     private int lastDir;
+    private long lastFire;
+    private final long coolDown=400;
     private final int frameWidth = 17;
     private final int frameHeight = 32;
     private final int[] framesUp = {4, 5, 6, 7, 8, 9, 10, 11};
@@ -49,29 +49,6 @@ public class Player extends Character {
         lastDir = 1;
         bulletCount = 0;
         magazine = 30;
-        coolDown = false;
-        coolDownTimer = new AnimationTimer() {
-            @Override
-            public void start() {
-                coolDown = true;
-                super.start();
-            }
-
-            @Override
-            public void stop() {
-                coolDown = false;
-                super.stop();
-            }
-            
-            @Override
-            public void handle(long currentNS) {
-                if (currentNS - prevNS > 15000000) {
-                    coolDown = false;
-                }
-                prevNS = currentNS;
-            }
-        };
-
     }
 
     public KeyMap getKeyMap() {
@@ -80,12 +57,8 @@ public class Player extends Character {
 
     private void shoot() {
         if (bulletCount < magazine) {
-            Bullet b = new Bullet(new Image("Textures/bullet.png", 3, 3, true, true));
+            Bullet b = new Bullet(this.posX + frameWidth + 3,this.posY + frameHeight,lastDir);
             world.addBullet(b);
-            b.setDirection(lastDir);
-            b.setX(this.posX + frameWidth + 3);
-            b.setY(this.posY + frameHeight);
-            b.activate();
             bulletCount++;
         }
     }
@@ -126,7 +99,6 @@ public class Player extends Character {
                 moveDir.setLeft(false);
             } else if (keyMap.shoot == event.getCode()) {
                 isShooting = false;
-                coolDownTimer.stop();
             } else if (keyMap.reload == event.getCode()) {
                 reload();
             }
@@ -152,9 +124,12 @@ public class Player extends Character {
             super.posX += super.moveSpeed * deltaTime;
             lastDir = 2;
         }
-        if (isShooting && !coolDown) {
+        if (isShooting) {
+            if (System.currentTimeMillis() - lastFire < coolDown) {
+                    return;
+            }
+            lastFire = System.currentTimeMillis();
             shoot();
-            coolDownTimer.start();
         }
 
     }
