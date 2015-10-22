@@ -35,6 +35,9 @@ public class World {
         pathFinder = new PathFinder();
         camera = new Camera();
         
+        //Load textures
+        Bullet.setTexture(new Image("Textures/bullet.png", 3, 3, true, true));
+        AI.setTexture(new Image("Textures/dolphin2.png"));
         //Creates a testplayer and add it to the world.
         KeyMap km = new KeyMap(KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, KeyCode.SPACE, KeyCode.R);
         Player p1 = new Player(250, 300, km, new Image("Textures/Knugen.png", 612, 32, true, true),this);
@@ -60,10 +63,14 @@ public class World {
         entities.add(o5);
         entities.add(o6);
         
-        AI ai = new AI(this,p1);
+        AI ai = new AI(this);
         ai.setX(50);
         ai.setY(100);
         entities.add(ai);
+    }
+    
+    public ArrayList<Entity> getEntities(){
+        return entities;
     }
     
     public ArrayList<PathNode> getPath(Entity start, Entity end){

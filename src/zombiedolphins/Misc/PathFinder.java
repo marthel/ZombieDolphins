@@ -20,9 +20,7 @@ public class PathFinder {
     }
     
     public ArrayList<PathNode> findPath(ArrayList<Obstacle> obstacles, Entity start, Entity end){
-        //System.out.println("Generating NavMesh");
         PathNode[][] navMesh = generateNavMesh(obstacles, start, end);
-        //System.out.println("NavMesh generated");
         PathNode startNode, endNode;
         ArrayList<PathNode> openNodes = new ArrayList();
         ArrayList<PathNode> closedNodes = new ArrayList();
@@ -31,9 +29,6 @@ public class PathFinder {
         endNode = getEnd(navMesh);
         
         openNodes.add(startNode);
-        //System.out.println("Finding path...");
-        //System.out.println("Startnode X:" + startNode.x + "Y:" + startNode.y);
-        //System.out.println("EndNode X:" + endNode.x + "Y:" + endNode.y);
 
         while(openNodes.size() > 0){
             PathNode current = openNodes.get(0);
@@ -44,7 +39,6 @@ public class PathFinder {
                     current = openNodes.get(i);
                 }
             }
-            //System.out.println("Current node X = " + current.x + "Y:" + current.y);
             
             openNodes.remove(current);
             closedNodes.add(current);

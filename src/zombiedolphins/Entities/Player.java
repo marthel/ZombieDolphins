@@ -80,13 +80,12 @@ public class Player extends Character {
 
     private void shoot() {
         if (bulletCount < magazine) {
-            Bullet b = new Bullet(new Image("Textures/bullet.png", 3, 3, true, true));
-            world.addBullet(b);
+            Bullet b = new Bullet();
             b.setDirection(lastDir);
             b.setX(this.posX + frameWidth + 3);
             b.setY(this.posY + frameHeight);
-            b.activate();
             bulletCount++;
+            world.addBullet(b);
         }
     }
 
