@@ -38,35 +38,43 @@ public class World {
         pathFinder = new PathFinder();
         camera = new Camera();
         
+        //
+        generateObstacles();
         //Creates a testplayer and add it to the world.
         KeyMap km = new KeyMap(KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, KeyCode.SPACE, KeyCode.R);
         Player p1 = new Player(250, 300, km, new Image("Textures/Knugen.png", 612, 32, true, true),this);
         KeyMap km2 = new KeyMap(KeyCode.UP, KeyCode.DOWN, KeyCode.LEFT, KeyCode.RIGHT, KeyCode.O, KeyCode.P);
-        Player p2 = new Player(30, 250, km2, new Image("Textures/Vickan.png", 612, 32, true, true),this);
+        Player p2 = new Player(300, 250, km2, new Image("Textures/Vickan.png", 612, 32, true, true),this);
         entities.add(p1);
         entities.add(p2);
-        
-        //Obstacles
-        
-        Obstacle o = new Obstacle(100,100);
-        Obstacle o1 = new Obstacle(132,100);
-        Obstacle o2 = new Obstacle(164,100);
-        Obstacle o3 = new Obstacle(196,100);
-        Obstacle o4 = new Obstacle(100,132);
-        Obstacle o5 = new Obstacle(100,164);
-        Obstacle o6 = new Obstacle(100,196);
-        entities.add(o);
-        entities.add(o1);
-        entities.add(o2);
-        entities.add(o3);
-        entities.add(o4);
-        entities.add(o5);
-        entities.add(o6);
-        
+
         AI ai = new AI(this);
         ai.setX(50);
         ai.setY(100);
         entities.add(ai);
+    }
+    
+    private void generateObstacles(){
+        for(int i = 0; i < 40; i++){
+            Obstacle o = new Obstacle(i * 32, 0);
+            Obstacle o1 = new Obstacle(i * 32, 480);
+            entities.add(o);
+            entities.add(o1);
+        }
+        for(int i = 0; i < 15; i++){
+            Obstacle o = new Obstacle(0, i*32);
+            Obstacle o1 = new Obstacle(1248, i*32);
+            entities.add(o);
+            entities.add(o1);
+        }
+        
+        for(int i = 0; i < 5;i++){
+            Obstacle o = new Obstacle(560, 98 + i*32);
+            Obstacle o1 = new Obstacle(300, 320 + i*32);
+            entities.add(o);
+            entities.add(o1);
+        }
+        
     }
     
     public ArrayList<PathNode> getPath(Entity start, Entity end){

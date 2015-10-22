@@ -12,23 +12,18 @@ import javafx.scene.paint.Color;
  *
  * @author Anton
  */
-public class Obstacle extends Entity {
-    
-    private final int width = 32;
-    private final int height = 32;
-    
+public class Obstacle extends Entity { 
     public Obstacle(int x, int y){
-        posX = x;
-        posY = y;
+        rect.setX(x);
+        rect.setY(y);
+        rect.setWidth(32);
+        rect.setHeight(32);
     }
-    
-    public int getWidth(){return width;}
-    public int getHeight(){return height;}
 
     @Override
     public void draw(GraphicsContext gc, Camera camera) {
         gc.setFill(Color.BLACK);
-        gc.fillRect(posX, posY, width, height);
+        gc.fillRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
     }
 
     @Override

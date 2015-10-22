@@ -7,6 +7,7 @@ package zombiedolphins.Entities;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.shape.*;
 
 /**
  *
@@ -14,32 +15,39 @@ import javafx.scene.image.Image;
  */
 public abstract class Entity {
 
-    float posX = 0, posY = 0;
     Image texture;
+    Rectangle rect = new Rectangle();
 
     public Entity() {
 
     }
 
     public Entity(float x, float y) {
-        posX = x;
-        posY = y;
+        rect.setX(x);
+        rect.setY(y);
     }
 
     public void setX(float x) {
-        posX = x;
+        rect.setX(x);
     }
 
     public void setY(float y) {
-        posY = y;
+        rect.setY(y);
     }
 
-    public float getX() {
-        return posX;
+    public double getX() {
+        return rect.getX();
     }
 
-    public float getY() {
-        return posY;
+    public double getY() {
+        return rect.getY();
+    }
+    
+    public double getWidth() {
+        return rect.getWidth();
+    }
+    public double getHeight(){
+        return rect.getHeight();
     }
 
     public abstract void draw(GraphicsContext gc, Camera camera);

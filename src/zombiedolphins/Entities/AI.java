@@ -23,6 +23,7 @@ public class AI extends Character{
     private World world;
     ArrayList<PathNode> wayPoints;
     ArrayList<Player> players;
+    private double health;
     
     Player p1;
     
@@ -32,6 +33,9 @@ public class AI extends Character{
         super.texture = AI.dolphinTexture;
         players = getPlayers();
         moveSpeed = 50f;
+        rect.setWidth(32);
+        rect.setHeight(32);
+        health = 100;
     }
     
     private Player findTarget(){
@@ -62,7 +66,7 @@ public class AI extends Character{
     
     private double getDistance(Entity object1, Entity object2){
         return Math.sqrt(Math.pow(object1.getX() - object2.getX(), 2) + 
-                Math.pow(object1.posY - object2.posY, 2));
+                Math.pow(object1.rect.getY() - object2.rect.getY(), 2));
     }
 
     @Override
@@ -74,15 +78,29 @@ public class AI extends Character{
             return;
         
         if(wayPoints.size()> 0){
-            if(posX + 16 < wayPoints.get(0).x){
-                posX += moveSpeed * deltaTime;
-            }else if(posX + 16 > wayPoints.get(0).x){
-                posX -= moveSpeed * deltaTime;
+            if(rect.getX() + 16 < wayPoints.get(0).x){
+                rect.setX(rect.getX() + moveSpeed * deltaTime);
+            }else if(rect.getX() + 16 > wayPoints.get(0).x){
+                rect.setX(rect.getX() - moveSpeed * deltaTime);
             }
-            if(posY + 16< wayPoints.get(0).y){
-                posY += moveSpeed * deltaTime;
-            }else if(posY + 16 > wayPoints.get(0).y){
-                posY -= moveSpeed * deltaTime;
+            if(rect.getY() + 16< wayPoints.get(0).y){
+                rect.setY(rect.getY() + moveSpeed * deltaTime);
+            }else if(rect.getY() + 16 > wayPoints.get(0).y){
+                rect.setY(rect.getY() - moveSpeed * deltaTime);
+            }
+        }
+        
+        
+        for(Entity e : world.getEntities()){
+            if(e instanceof Bullet){
+                if(e.rect.intersects(this.rect.getBoundsInLocal())){
+                    System.out.println("BULLET HIT!");
+                    world.getEntities().remove(e);
+                    health-=25;
+                    if(health < 0){
+                        world.getEntities().remove(this);
+                    }
+                }
             }
         }
     }
@@ -91,7 +109,7 @@ public class AI extends Character{
     public void draw(GraphicsContext gc, Camera camera) {
         gc.setFill(Color.GREEN);
         //gc.fillRect(posX, posY, 32, 32);
-        gc.drawImage(texture, posX, posY, 32, 32);
+        gc.drawImage(texture, rect.getX(), rect.getY(), 32, 32);
         
         if(wayPoints == null || wayPoints.size() < 1)
             return;

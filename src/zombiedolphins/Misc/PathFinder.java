@@ -149,8 +149,8 @@ public class PathFinder {
         
         //Generate obstacles
         for(Obstacle o : obstacles){
-            int x = 512 + (int)o.getX()/o.getWidth();
-            int y = 512 + (int)o.getY()/o.getHeight();
+            int x = 512 + (int)o.getX()/(int)o.getWidth();
+            int y = 512 + (int)o.getY()/(int)o.getHeight();
             
             navMesh[x][y].setObstacle();
         }

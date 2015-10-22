@@ -47,6 +47,8 @@ public class Player extends Character {
         lastDir = 1;
         bulletCount = 0;
         magazine = 30;
+        rect.setWidth(32);
+        rect.setHeight(32);
     }
 
     public KeyMap getKeyMap() {
@@ -55,7 +57,7 @@ public class Player extends Character {
 
     private void shoot() {
         if (bulletCount < magazine) {
-            Bullet b = new Bullet(this.posX + frameWidth + 3, this.posY + frameHeight, lastDir);
+            Bullet b = new Bullet((float)rect.getX() + frameWidth + 3, (float)rect.getY() + frameHeight, lastDir);
             world.addBullet(b);
             bulletCount++;
         }
@@ -104,23 +106,41 @@ public class Player extends Character {
     }
 
     @Override
-    public void update(double deltaTime
-    ) {
+    public void update(double deltaTime) {
+        boolean up = false;
+        boolean right = false;
+        
         if (moveDir.getUp()) {
-            super.posY -= super.moveSpeed * deltaTime;
+            rect.setY(rect.getY() - super.moveSpeed * deltaTime);
             lastDir = 1;
+            up = true;
         } else if (moveDir.getDown()) {
-            super.posY += super.moveSpeed * deltaTime;
+            rect.setY(rect.getY() + super.moveSpeed * deltaTime);
             lastDir = -1;
-
+            up = false;
+        }
+        
+        for(Entity e : world.getEntities()){
+            if(e instanceof Obstacle){
+                if(rect.intersects(e.rect.getBoundsInLocal())){
+                    if(up){
+                        rect.setY(rect.getY() + super.moveSpeed * deltaTime);
+                    }
+                    else{
+                        rect.setY(rect.getY() - super.moveSpeed * deltaTime);
+                    }
+                }
+            }
         }
 
         if (moveDir.getLeft()) {
-            super.posX -= super.moveSpeed * deltaTime;
+            rect.setX(rect.getX() - super.moveSpeed * deltaTime);
             lastDir = -2;
+            right = false;
         } else if (moveDir.getRight()) {
-            super.posX += super.moveSpeed * deltaTime;
+            rect.setX(rect.getX() + super.moveSpeed * deltaTime);
             lastDir = 2;
+            right = true;
         }
         if (isShooting) {
             if (System.currentTimeMillis() - prevTime < coolDown) {
@@ -129,7 +149,19 @@ public class Player extends Character {
             prevTime = System.currentTimeMillis();
             shoot();
         }
-
+        
+        for(Entity e : world.getEntities()){
+            if(e instanceof Obstacle){
+                if(rect.intersects(e.rect.getBoundsInLocal())){
+                    if(right){
+                        rect.setX(rect.getX() - super.moveSpeed * deltaTime);
+                    }
+                    else{
+                        rect.setX(rect.getX() + super.moveSpeed * deltaTime);
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -137,7 +169,7 @@ public class Player extends Character {
     ) {
         gc.drawImage(texture,
                 playerAnimator.getCurretFrame() * frameWidth, 0, frameWidth, frameHeight,
-                posX, posY, frameWidth * 1.3, frameHeight * 1.3);
+                rect.getX(), rect.getY(), frameWidth * 1.3, frameHeight * 1.3);
         /* TODO:
          * - Draw relative to camera position.
          */

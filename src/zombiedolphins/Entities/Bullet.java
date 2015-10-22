@@ -24,6 +24,8 @@ public class Bullet extends Entity {
         super.texture = bulletTexture;
         isActive = true;
         direction = dir;
+        rect.setWidth(3);
+        rect.setHeight(3);
     }
     public void kill(){
         isActive = false;
@@ -32,15 +34,15 @@ public class Bullet extends Entity {
         return isActive;
     }
     private void checkBoundaries(){
-        if(posX<0 || posX > 1280)
+        if(rect.getX()<0 || rect.getX() > 1280)
             kill();
-        if(posY<0 || posY > 520)
+        if(rect.getY()<0 || rect.getY() > 520)
             kill();
     }
     @Override
     public void draw(GraphicsContext gc, Camera camera) {
         if (isActive) {
-            gc.drawImage(texture, posX, posY);
+            gc.drawImage(texture, rect.getX(), rect.getY());
         }
     }
 
@@ -49,14 +51,13 @@ public class Bullet extends Entity {
         checkBoundaries();
         if (isActive) {
             if (direction == 1) {
-                this.posY -= moveSpeed * deltaTime;
+                rect.setY(rect.getY() - moveSpeed * deltaTime);
             } else if (direction == -1) {
-                this.posY += moveSpeed * deltaTime;
+                rect.setY(rect.getY() + moveSpeed * deltaTime);
             } else if (direction == -2) {
-                this.posX -= moveSpeed * deltaTime;
+                rect.setX(rect.getX() - moveSpeed * deltaTime);
             } else if (direction == 2) {
-                this.posX += moveSpeed * deltaTime;
-
+                rect.setX(rect.getX() + moveSpeed * deltaTime);
             }
         }
     }
