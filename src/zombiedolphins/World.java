@@ -82,6 +82,7 @@ public class World {
         for (Entity e : entities) {
             e.update(delta);
         }
+        removeDeadBullets();
     }
     public void addBullet(Bullet b) {
         entities.add(b);
