@@ -133,7 +133,8 @@ public class Player extends Character {
     }
 
     @Override
-    public void draw(GraphicsContext gc, Camera camera) {
+    public void draw(GraphicsContext gc, Camera camera
+    ) {
         gc.drawImage(texture,
                 playerAnimator.getCurretFrame() * frameWidth, 0, frameWidth, frameHeight,
                 posX, posY, frameWidth * 1.3, frameHeight * 1.3);

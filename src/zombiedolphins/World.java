@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -36,6 +37,7 @@ public class World {
         entities = new CopyOnWriteArrayList();
         pathFinder = new PathFinder();
         camera = new Camera();
+        
         //Creates a testplayer and add it to the world.
         KeyMap km = new KeyMap(KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, KeyCode.SPACE, KeyCode.R);
         Player p1 = new Player(250, 300, km, new Image("Textures/Knugen.png", 612, 32, true, true),this);
@@ -65,10 +67,6 @@ public class World {
         ai.setX(50);
         ai.setY(100);
         entities.add(ai);
-    }
-    
-    public List<Entity> getEntities(){
-        return entities;
     }
     
     public ArrayList<PathNode> getPath(Entity start, Entity end){
