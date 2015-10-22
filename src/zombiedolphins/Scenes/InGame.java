@@ -18,6 +18,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import zombiedolphins.GraphicsView;
+import zombiedolphins.Misc.KeyMap;
 import zombiedolphins.World;
 
 /**
@@ -25,7 +26,7 @@ import zombiedolphins.World;
  * @author anton
  */
 public class InGame extends BorderPane implements Controllable {
-
+    private KeyMap km;
     GraphicsView graphicsView;
     Canvas gameCanvas;
     GraphicsContext gc;
@@ -36,7 +37,6 @@ public class InGame extends BorderPane implements Controllable {
     Label p2Ammo;
     private int[] ammo;
     double lastTick = 0;
-
     public InGame(GraphicsView gv) {
         this.graphicsView = gv;
         super.setStyle("-fx-background-color: yellow;");
@@ -48,7 +48,6 @@ public class InGame extends BorderPane implements Controllable {
                 timerUpdate(now);
             }
         };
-
         //Return button
         Button btnReturn = new Button("Return");
         btnReturn.setMinWidth(100);
@@ -79,11 +78,13 @@ public class InGame extends BorderPane implements Controllable {
         gc.strokeLine(10, 10, 20, 20);
         gc.fillRect(0, 0, 1280, 620);
     }
-
+    public void setKeyMap(KeyMap km){
+        this.km=km;
+    }
     public void initializeWorld(World.Level level) {
         switch (level) {
             case ONE:
-                world = new World();
+                world = new World(km);
                 timer.start();
                 break;
         }

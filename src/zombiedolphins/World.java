@@ -32,22 +32,21 @@ public class World {
     private List<Entity> entities;
     private Camera camera;
     private PathFinder pathFinder;
-    
-    public World() {
+    private KeyMap km;
+    public World(KeyMap km) {
+        this.km=km;
         entities = new CopyOnWriteArrayList();
         pathFinder = new PathFinder();
         camera = new Camera();
         
-        //Creates a testplayer and add it to the world.
-        KeyMap km = new KeyMap(KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, KeyCode.SPACE, KeyCode.R);
-        Player p1 = new Player(250, 300, km, new Image("Textures/Knugen.png", 612, 32, true, true),this);
+        //Players
+        //km = new KeyMap(KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.F, KeyCode.R);
+        Player p1 = new Player(250, 300, this.km, new Image("Textures/Knugen.png", 612, 32, true, true),this);
         KeyMap km2 = new KeyMap(KeyCode.UP, KeyCode.DOWN, KeyCode.LEFT, KeyCode.RIGHT, KeyCode.O, KeyCode.P);
         Player p2 = new Player(30, 250, km2, new Image("Textures/Vickan.png", 612, 32, true, true),this);
         entities.add(p1);
         entities.add(p2);
-        
         //Obstacles
-        
         Obstacle o = new Obstacle(100,100);
         Obstacle o1 = new Obstacle(132,100);
         Obstacle o2 = new Obstacle(164,100);
@@ -68,7 +67,6 @@ public class World {
         ai.setY(100);
         entities.add(ai);
     }
-    
     public ArrayList<PathNode> getPath(Entity start, Entity end){
         ArrayList<Obstacle> obstacles = new ArrayList();
         for(Entity e : entities){
