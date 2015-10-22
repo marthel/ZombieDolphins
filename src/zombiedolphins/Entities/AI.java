@@ -89,7 +89,6 @@ public class AI extends Character{
 
     @Override
     public void draw(GraphicsContext gc, Camera camera) {
-        
         gc.setFill(Color.GREEN);
         //gc.fillRect(posX, posY, 32, 32);
         gc.drawImage(texture, posX, posY, 32, 32);

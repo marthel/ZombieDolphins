@@ -78,6 +78,10 @@ public class World {
         
         return pathFinder.findPath(obstacles, start, end);
     }
+    
+    public List<Entity> getEntities(){
+        return entities;
+    }
 
     public void update(double delta) {
         for (Entity e : entities) {
