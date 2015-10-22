@@ -16,7 +16,7 @@ import zombiedolphins.Misc.MoveDirection;
 public class Bullet extends Entity {
 
     MoveDirection moveDir;
-    private boolean isActive;
+    private boolean isActive,isDead;
     private float moveSpeed = 350f;
     private int direction;
 
@@ -26,17 +26,29 @@ public class Bullet extends Entity {
         moveDir = new MoveDirection();
         isActive = false;
         direction = 0;
+        isDead=false;
 
     }
 
-    public void setState(boolean state) {
-        isActive = state;
+    public void activate() {
+        isActive = true;
     }
 
     public void setDirection(int dir) {
         direction = dir;
     }
-
+    public void kill(){
+        isActive = false;
+    }
+    public boolean getStatus(){
+        return isActive;
+    }
+    private void checkBoundaries(){
+        if(posX<0 || posX > 1280)
+            kill();
+        if(posY<0 || posY > 520)
+            kill();
+    }
     @Override
     public void draw(GraphicsContext gc, Camera camera) {
         if (isActive) {
@@ -46,20 +58,14 @@ public class Bullet extends Entity {
 
     @Override
     public void update(double deltaTime) {
+        checkBoundaries();
         if (isActive) {
-            //System.out.println("borde skjuta nu");
-            //System.out.println("UP  " + moveDir.getUp());
             if (direction == 1) {
                 this.posY -= moveSpeed * deltaTime;
-
             } else if (direction == -1) {
                 this.posY += moveSpeed * deltaTime;
-
-            }
-
-            if (direction == -2) {
+            } else if (direction == -2) {
                 this.posX -= moveSpeed * deltaTime;
-
             } else if (direction == 2) {
                 this.posX += moveSpeed * deltaTime;
 
