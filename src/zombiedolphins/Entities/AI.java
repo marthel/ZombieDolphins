@@ -5,6 +5,7 @@
  */
 package zombiedolphins.Entities;
 
+import java.util.List;
 import java.util.ArrayList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -18,7 +19,7 @@ import zombiedolphins.World;
  * @author Anton
  */
 public class AI extends Character{
-    public static Image dolphinTexture;
+    private static final Image dolphinTexture = new Image("Textures/dolphin2.png", 32, 32, true, true);
     private World world;
     ArrayList<PathNode> wayPoints;
     ArrayList<Player> players;
@@ -31,10 +32,6 @@ public class AI extends Character{
         super.texture = AI.dolphinTexture;
         players = getPlayers();
         moveSpeed = 50f;
-    }
-    
-    public static void setTexture(Image image){
-        AI.dolphinTexture = image;
     }
     
     private Player findTarget(){
@@ -97,7 +94,7 @@ public class AI extends Character{
         //gc.fillRect(posX, posY, 32, 32);
         gc.drawImage(texture, posX, posY, 32, 32);
         
-        if(wayPoints == null)
+        if(wayPoints == null || wayPoints.size() < 1)
             return;
         
         gc.setFill(Color.BLACK);

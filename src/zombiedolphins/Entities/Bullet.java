@@ -7,7 +7,6 @@ package zombiedolphins.Entities;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import zombiedolphins.Misc.MoveDirection;
 
 /**
  *
@@ -15,25 +14,15 @@ import zombiedolphins.Misc.MoveDirection;
  */
 public class Bullet extends Entity {
 
-    private static Image bulletTexture;
-    MoveDirection moveDir;
+    private static final Image bulletTexture = new Image("Textures/bullet.png", 3, 3, true, true);
     private boolean isActive;
     private float moveSpeed = 350f;
     private int direction;
 
-    public Bullet() {
-        super(500, 300);
-        super.texture = Bullet.bulletTexture;
-        moveDir = new MoveDirection();
+    public Bullet(float x, float y, int dir) {
+        super(x, y);
+        super.texture = bulletTexture;
         isActive = true;
-        direction = 0;
-    }
-    
-    public static void setTexture(Image image){
-        Bullet.bulletTexture = image;
-    }
-  
-    public void setDirection(int dir) {
         direction = dir;
     }
     public void kill(){

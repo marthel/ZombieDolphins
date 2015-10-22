@@ -7,6 +7,8 @@ package zombiedolphins;
 
 import zombiedolphins.Entities.Entity;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -26,18 +28,14 @@ import zombiedolphins.Misc.PathNode;
  */
 public class World {
 
-    private ArrayList<Entity> entities;
+    private List<Entity> entities;
     private Camera camera;
     private PathFinder pathFinder;
     
     public World() {
-        entities = new ArrayList();
+        entities = new CopyOnWriteArrayList();
         pathFinder = new PathFinder();
         camera = new Camera();
-        
-        //Load textures
-        Bullet.setTexture(new Image("Textures/bullet.png", 3, 3, true, true));
-        AI.setTexture(new Image("Textures/dolphin2.png"));
         //Creates a testplayer and add it to the world.
         KeyMap km = new KeyMap(KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, KeyCode.SPACE, KeyCode.R);
         Player p1 = new Player(250, 300, km, new Image("Textures/Knugen.png", 612, 32, true, true),this);
@@ -69,7 +67,7 @@ public class World {
         entities.add(ai);
     }
     
-    public ArrayList<Entity> getEntities(){
+    public List<Entity> getEntities(){
         return entities;
     }
     
@@ -87,6 +85,7 @@ public class World {
         for (Entity e : entities) {
             e.update(delta);
         }
+        removeDeadBullets();
     }
     public void addBullet(Bullet b) {
         entities.add(b);
