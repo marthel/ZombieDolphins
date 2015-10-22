@@ -7,6 +7,8 @@ package zombiedolphins;
 
 import zombiedolphins.Entities.Entity;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -26,12 +28,12 @@ import zombiedolphins.Misc.PathNode;
  */
 public class World {
 
-    private ArrayList<Entity> entities;
+    private List<Entity> entities;
     private Camera camera;
     private PathFinder pathFinder;
     
     public World() {
-        entities = new ArrayList();
+        entities = new CopyOnWriteArrayList();
         pathFinder = new PathFinder();
         camera = new Camera();
         
